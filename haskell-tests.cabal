@@ -16,7 +16,11 @@ cabal-version:       >=1.8
 
 executable haskell-tests
   main-is: sst.hs
-  
+
+  hs-source-dirs: src
+
+  other-modules: Semaphore.Api
+
   ghc-options: -Wall -fforce-recomp -fno-code
 
   build-depends: base ==4.6.*, 
