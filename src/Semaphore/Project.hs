@@ -8,6 +8,7 @@ module Semaphore.Project ( Project (..)
 import Data.Aeson as Json
 import GHC.Generics
 import Semaphore.Branch
+import Semaphore.Colors
 
 data Project = Project { name     :: String
                        , owner    :: String
@@ -20,8 +21,8 @@ instance Json.ToJSON Project
 
 
 showProject :: Project -> String
-showProject project  = ownerProject ++ "\n" ++ showBranches (branches project)
-  where ownerProject = owner project ++ "/" ++ name project
+showProject p = ownerProject ++ "\n" ++ showBranches (branches p)
+  where ownerProject = colorize Yellow $ owner p ++ "/" ++ name p
 
 
 showProjects :: [Project] -> String

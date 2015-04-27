@@ -7,6 +7,7 @@ module Semaphore.Branch ( Branch (..)
 
 import Data.Aeson as Json
 import GHC.Generics
+import Semaphore.Colors
 
 data Branch = Branch { branch_name :: String
                      , result      :: Maybe String
@@ -16,11 +17,17 @@ data Branch = Branch { branch_name :: String
 instance Json.FromJSON Branch
 instance Json.ToJSON Branch
 
+branchStatus :: Maybe String -> String
+branchStatus Nothing       = "Not Yet Built"
+branchStatus (Just status) = colorizeBranchStatus status
+  where colorizeBranchStatus = case status of
+                                "failed" -> colorize Red
+                                "passed" -> colorize Green
+                                _        -> colorize Blue
 
 showBranch :: Branch -> String
-showBranch branch = "  - " ++ branch_name branch ++ branchStatus (result branch)
-  where branchStatus (Just status) = " :: " ++ status
-        branchStatus Nothing       = " :: Not Yet Built"
+showBranch b = "  - " ++ branchDescription
+  where branchDescription = branchStatus (result b) ++ " :: " ++ branch_name b
 
 
 showBranches :: [Branch] -> String

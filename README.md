@@ -14,14 +14,14 @@ written in Haskell.
 ``` sh
 $ sst <api_token>
 shiroyasha/base_app
-  - master
-  - development
-  - is/testing
+  - passed :: master
+  - passed :: development
+  - failed :: is/testing
 
 shiroyasha/sst
-  - master
-  - staging
-  - is/haskell
+  - passed :: master
+  - passed :: staging
+  - passed :: is/haskell
 ```
 
 ## Licence
