@@ -1,3 +1,6 @@
 test
 dist
 .cabal-sandbox
+*.swp
+*.swo
+cabal.sandbox.config
