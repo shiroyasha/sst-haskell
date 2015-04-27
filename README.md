@@ -13,12 +13,12 @@ written in Haskell.
 
 ``` sh
 $ sst <api_token>
-base_app
+shiroyasha/base_app
   - master
   - development
   - is/testing
 
-sst
+shiroyasha/sst
   - master
   - staging
   - is/haskell

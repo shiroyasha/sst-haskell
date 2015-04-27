@@ -9,7 +9,8 @@ import Data.Aeson as Json
 import GHC.Generics
 import Semaphore.Branch
 
-data Project = Project { name :: !String
+data Project = Project { name     :: String
+                       , owner    :: String
                        , branches :: [Branch]
                        } deriving (Generic)
 
@@ -19,7 +20,8 @@ instance Json.ToJSON Project
 
 
 showProject :: Project -> String
-showProject project = name project ++ "\n" ++ showBranches (branches project)
+showProject project  = ownerProject ++ "\n" ++ showBranches (branches project)
+  where ownerProject = owner project ++ "/" ++ name project
 
 
 showProjects :: [Project] -> String
