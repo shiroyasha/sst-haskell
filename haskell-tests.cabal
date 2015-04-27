@@ -16,5 +16,14 @@ cabal-version:       >=1.8
 
 executable haskell-tests
   main-is: sst.hs
-  -- other-modules:       
-  build-depends:       base ==4.6.*, aeson, bytestring, conduit-extra, http-conduit, vector, unordered-containers, text
+  
+  ghc-options: -Wall -fforce-recomp -fno-code
+
+  build-depends: base ==4.6.*, 
+                 aeson, 
+                 bytestring, 
+                 conduit-extra, 
+                 http-conduit, 
+                 vector, 
+                 unordered-containers, 
+                 text

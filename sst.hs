@@ -2,18 +2,11 @@
 
 import qualified System.Environment
 import qualified Network.HTTP.Conduit as Net
-import qualified Data.ByteString.Lazy.Char8 as BS
 import Data.Aeson as Json
-import qualified Data.Vector
-import qualified Data.HashMap.Strict
-import Data.Maybe
-import Data.Typeable
-import qualified Data.Text as T
-import qualified Data.Text.IO as TIO
 import GHC.Generics
-import Control.Monad
 import Control.Applicative
 
+baseUrl :: [Char]
 baseUrl = "https://s3.semaphoreci.com"
 
 -- Each of the following section should probably be a seperate file
@@ -27,10 +20,10 @@ baseUrl = "https://s3.semaphoreci.com"
 data Branch = Branch { branch_name :: !String } deriving (Show, Generic)
 
 showBranch :: Branch -> String
-showBranch branch = "  - " ++ (branch_name branch)
+showBranch branch = "  - " ++ branch_name branch
 
 showBranches :: [Branch] -> String
-showBranches branches = unlines (map showBranch branches)
+showBranches b = unlines (map showBranch b)
 
 instance Json.FromJSON Branch
 instance Json.ToJSON Branch
@@ -41,10 +34,10 @@ instance Json.ToJSON Branch
 
 data Project = Project { name :: !String
                        , branches :: [Branch]
-                       } deriving (Show, Generic)
+                       } deriving (Generic)
 
 showProject :: Project -> String
-showProject project = (name project) ++ "\n" ++ (showBranches (branches project))
+showProject project   = name project ++ "\n" ++ showBranches (branches project)
 
 showProjects :: [Project] -> String
 showProjects projects = unlines (map showProject projects)
@@ -61,26 +54,24 @@ type Path  = String
 type Token = String
 
 semaphore :: Token -> Path -> IO (Either String [Project])
-semaphore token path = do
+semaphore token path =
   Json.eitherDecode <$> Net.simpleHttp (baseUrl ++ path ++ "?auth_token=" ++ token)
 
 
 loadToken :: IO String
-loadToken = do
-  args <- System.Environment.getArgs 
-
-  return (args !! 0)
+loadToken = head <$> System.Environment.getArgs
 
 
 --
 -- Main entry of the application
 --
 
+main :: IO ()
 main = do
   token <- loadToken
 
   projects <- semaphore token "/api/v1/projects"
 
   case projects of
-    Left error -> print $ error
-    Right pr   -> putStrLn $ showProjects pr
+    Left err -> print err
+    Right pr -> putStrLn $ showProjects pr
