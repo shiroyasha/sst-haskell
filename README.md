@@ -1,10 +1,15 @@
-# Semaphore status in Haskell
+# SST &mdash; Semaphore Status
 
-The sole purpose of this project is to extend my Haskell knowledge.
+This package contains the source code of SST, a command line utility 
+for [SemaphoreCI](https://semaphoreci.com/).
+
+SST started as a [Ruby gem](https://github.com/renderedtext/semaphore-status),
+but the need to produce a native binary executable led to a new forked version
+written in Haskell.
+
+**Note**: The haskell version of SST is still unstable.
 
 ## Usage
-
-Example usage with its output:
 
 ``` sh
 $ sst <api_token>
@@ -21,24 +26,4 @@ sst
 
 ## Licence
 
-The MIT License (MIT)
-
-Copyright (c) 2015 Igor Šarčević <igisar@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Semaphore Status is released under the [MIT Licence](http://opensource.org/licenses/MIT).
