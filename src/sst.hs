@@ -12,7 +12,7 @@ loadToken = head <$> System.Environment.getArgs
 main :: IO ()
 main = do
   apiToken <- loadToken
-  projects <- Semaphore.Api.getProjects apiToken "/api/v1/projects"
+  projects <- Semaphore.Api.getProjects apiToken
 
   case projects of
     Left err -> print err

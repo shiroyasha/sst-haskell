@@ -2,8 +2,8 @@
 
 module Semaphore.Api ( getProjects ) where
 
-import qualified Network.HTTP.Conduit as Net
 import Data.Aeson as Json
+import Network.HTTP.Conduit
 import Control.Applicative
 
 import Semaphore.Project
@@ -11,9 +11,11 @@ import Semaphore.Project
 baseUrl :: String
 baseUrl = "https://s3.semaphoreci.com"
 
-type Path  = String
-type Token = String
+type ApiToken = String
 
-getProjects :: Token -> Path -> IO (Either String [Project])
-getProjects token path = Json.eitherDecode <$> Net.simpleHttp url
-  where url = baseUrl ++ path ++ "?auth_token=" ++ token
+constructUrl :: ApiToken -> String -> String
+constructUrl token path = baseUrl ++ path ++ "?auth_token=" ++ token
+
+getProjects :: ApiToken -> IO (Either String [Project])
+getProjects token = Json.eitherDecode <$>
+  simpleHttp (constructUrl token "/api/v1/projects")
