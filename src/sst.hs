@@ -1,19 +1,44 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main (main) where
 
-import System.Environment
-import Control.Applicative
+import Data.Text
+import qualified Data.Text.IO as TIO
 
 import Semaphore.Api
 import Semaphore.Project
+import Semaphore.Config
 
-loadToken :: IO String
-loadToken = head <$> System.Environment.getArgs
+cantFindApiToken :: Text
+cantFindApiToken = intercalate "\n" [
+  "It seems you don't have a valid .sst/api_token file.",
+  "Please create one by executing the following command:",
+  "",
+  "  echo '<api_token>' > ~/.sst/api_token"
+  ]
+
+connectionError :: Text
+connectionError = intercalate "\n" [
+  "The connection to Semaphore's API failed.",
+  "Please make sure you have a working internet connection."
+  ]
+
+
+showProjectTree :: String -> IO ()
+showProjectTree apiToken = do
+  apiDomain <- loadApiDomain
+
+  projects  <- Semaphore.Api.getProjects apiDomain apiToken
+
+  case projects of
+    Left err -> TIO.putStrLn connectionError
+    Right pr -> putStrLn $ showProjects pr
+
 
 main :: IO ()
 main = do
-  apiToken <- loadToken
-  projects <- Semaphore.Api.getProjects apiToken
+  apiToken <- loadApiToken
 
-  case projects of
-    Left err -> print err
-    Right pr -> putStrLn $ showProjects pr
+  case apiToken of
+    Just token -> showProjectTree token
+    Nothing    -> TIO.putStrLn cantFindApiToken

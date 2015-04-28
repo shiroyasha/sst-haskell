@@ -8,14 +8,12 @@ import Control.Applicative
 
 import Semaphore.Project
 
-baseUrl :: String
-baseUrl = "https://s3.semaphoreci.com"
+type ApiToken  = String
+type ApiDomain = String
 
-type ApiToken = String
+constructUrl :: ApiDomain -> ApiToken -> String -> String
+constructUrl domain path token = domain ++ path ++ "?auth_token=" ++ token
 
-constructUrl :: ApiToken -> String -> String
-constructUrl token path = baseUrl ++ path ++ "?auth_token=" ++ token
-
-getProjects :: ApiToken -> IO (Either String [Project])
-getProjects token = Json.eitherDecode <$>
-  simpleHttp (constructUrl token "/api/v1/projects")
+getProjects :: ApiDomain -> ApiToken -> IO (Either String [Project])
+getProjects domain token = Json.eitherDecode <$>
+  simpleHttp (constructUrl domain "/api/v1/projects" token)

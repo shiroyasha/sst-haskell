@@ -12,7 +12,7 @@ written in Haskell.
 ## Usage
 
 ``` sh
-$ sst <api_token>
+$ sst
 ┌─ shiroyasha/base_app
 ├── passed :: master
 ├── passed :: development

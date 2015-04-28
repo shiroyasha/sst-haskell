@@ -27,4 +27,5 @@ executable sst
                  http-conduit, 
                  vector, 
                  unordered-containers, 
-                 text
+                 text,
+                 directory
