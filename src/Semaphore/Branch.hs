@@ -17,6 +17,9 @@ data Branch = Branch { branch_name :: String
 instance Json.FromJSON Branch
 instance Json.ToJSON Branch
 
+drawTree :: [String] -> String
+drawTree xs = unlines $ map ("├── "++) (init xs) ++ ["└── " ++ (last xs)]
+
 branchStatus :: Maybe String -> String
 branchStatus Nothing       = "Not Yet Built"
 branchStatus (Just status) = colorizeBranchStatus status
@@ -26,9 +29,8 @@ branchStatus (Just status) = colorizeBranchStatus status
                                 _        -> colorize Blue
 
 showBranch :: Branch -> String
-showBranch b = "  - " ++ branchDescription
-  where branchDescription = branchStatus (result b) ++ " :: " ++ branch_name b
+showBranch b = branchStatus (result b) ++ " :: " ++ branch_name b
 
 
 showBranches :: [Branch] -> String
-showBranches branches = unlines (map showBranch branches)
+showBranches branches = drawTree $ map showBranch branches

@@ -13,15 +13,15 @@ written in Haskell.
 
 ``` sh
 $ sst <api_token>
-shiroyasha/base_app
-  - passed :: master
-  - passed :: development
-  - failed :: is/testing
+┌─ shiroyasha/base_app
+├── passed :: master
+├── passed :: development
+└── failed :: is/testing
 
-shiroyasha/sst
-  - passed :: master
-  - passed :: staging
-  - passed :: is/haskell
+┌─ shiroyasha/sst
+├── passed :: master
+├── passed :: staging
+└── passed :: is/haskell
 ```
 
 ## Licence

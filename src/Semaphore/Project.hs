@@ -21,7 +21,7 @@ instance Json.ToJSON Project
 
 
 showProject :: Project -> String
-showProject p = ownerProject ++ "\n" ++ showBranches (branches p)
+showProject p = "┌─ " ++ ownerProject ++ "\n" ++ showBranches (branches p)
   where ownerProject = colorize Yellow $ owner p ++ "/" ++ name p
 
 
